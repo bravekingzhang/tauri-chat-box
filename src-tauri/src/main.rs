@@ -1,0 +1,83 @@
+// Prevents additional console window on Windows in release, DO NOT REMOVE!!
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
+use std::sync::Mutex;
+
+mod session;
+use session::Database;
+use session::Message;
+use session::Session;
+
+fn main() {
+    let db = Database::new("database.db").expect("Unable to create database connection");
+    let app_state = AppState { db: Mutex::new(db) };
+    tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            create_session,
+            get_all_sessions,
+            add_message,
+            get_all_messages
+        ])
+        .manage(app_state)
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
+}
+
+struct AppState {
+    db: Mutex<Database>,
+}
+
+#[tauri::command]
+fn greet(name: &str) -> String {
+    format!("Hello, {}! You've been greeted from Rust!", name)
+}
+
+#[tauri::command]
+fn create_session(state: tauri::State<AppState>, new_session: &str) -> Result<Session, String> {
+    state
+        .db
+        .lock()
+        .unwrap()
+        .add_session(new_session)
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+fn get_all_sessions(state: tauri::State<AppState>) -> Result<Vec<Session>, String> {
+    state
+        .db
+        .lock()
+        .unwrap()
+        .get_all_sessions()
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+fn get_all_messages(
+    state: tauri::State<AppState>,
+    session_id: i32,
+) -> Result<Vec<Message>, String> {
+    state
+        .db
+        .lock()
+        .unwrap()
+        .get_all_messages(session_id)
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+fn add_message(
+    state: tauri::State<AppState>,
+    session_id: i32,
+    role: &str,
+    text: Option<&str>,
+    attachment_path: Option<&str>,
+) -> Result<Message, String> {
+    state
+        .db
+        .lock()
+        .unwrap()
+        .add_message(session_id, role, text, attachment_path)
+        .map_err(|err| err.to_string())
+}
