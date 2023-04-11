@@ -28,7 +28,7 @@ impl Database {
     }
 
     pub fn add_session(&mut self, name: &str) -> Result<Session, Error> {
-        let mut tx = self.conn.transaction()?;
+        let tx = self.conn.transaction()?;
         tx.execute("INSERT INTO sessions (name) VALUES (?)", &[name])?;
         let id = tx.last_insert_rowid() as i32;
         tx.commit()?;
@@ -60,7 +60,7 @@ impl Database {
         text: Option<&str>,
         attachment_path: Option<&str>,
     ) -> Result<Message, Error> {
-        let mut tx = self.conn.transaction()?;
+        let tx = self.conn.transaction()?;
         tx.execute(
             "INSERT INTO messages (session_id, role) VALUES (?, ?)",
             params![session_id, role],
