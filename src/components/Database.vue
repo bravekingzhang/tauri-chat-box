@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/tauri";
+import { SessionRepository, Session } from "../repository/session";
 
 const greetMsg = ref("");
 const name = ref("");
-const sessionList = ref<[{ id, name }]>();
+const sessionList = ref<Session[]>();
 
 async function create_session() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    greetMsg.value = await invoke("create_session", { newSession: name.value });
+    const session: Session = await SessionRepository.getInstance().createSession(name.value);
+    greetMsg.value = session.name;
 }
 
 async function get_all_sessions() {
-    sessionList.value = await invoke("get_all_sessions");
+    sessionList.value = await SessionRepository.getInstance().loadConversations();
     console.log(sessionList.value);
 }
 </script>

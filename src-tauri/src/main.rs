@@ -1,8 +1,6 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::sync::Mutex;
-
 mod session;
 use session::Database;
 use session::Message;
@@ -10,7 +8,7 @@ use session::Session;
 
 fn main() {
     let db = Database::new("database.db").expect("Unable to create database connection");
-    let app_state = AppState { db: Mutex::new(db) };
+    let app_state = AppState::new(Mutex::new(db));
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             greet,
@@ -26,6 +24,11 @@ fn main() {
 
 struct AppState {
     db: Mutex<Database>,
+}
+impl AppState {
+    pub fn new(db: Mutex<Database>) -> Self {
+        Self { db }
+    }
 }
 
 #[tauri::command]

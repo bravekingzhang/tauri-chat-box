@@ -1,0 +1,22 @@
+{
+  "common": {
+    "language": "Language",
+    "zh-CN": "简体中文",
+    "en": "English",
+    "setting": "Setting",
+    "theme": "Theme",
+    "light": "light",
+    "dark": "dark",
+    "theme_color": "Theme color",
+    "dark_theme": "Dark Theme"
+  },
+  "theme": {
+    "RedSandDunes": "Red Sand Dunes",
+    "GreenMountainTop": "Green Mountain Top",
+    "OrangeDesert": "Orange Desert",
+    "BlueMountains": "Blue Mountains",
+    "GreenRockyMountains": "Green Rocky Mountains",
+    "Customize": "Customize",
+    "recent": "Recent"
+  }
+}
