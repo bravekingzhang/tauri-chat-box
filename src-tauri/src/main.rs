@@ -15,6 +15,8 @@ fn main() {
             create_session,
             get_all_sessions,
             add_message,
+            delete_session,
+            update_session,
             get_all_messages
         ])
         .manage(app_state)
@@ -37,12 +39,32 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn create_session(state: tauri::State<AppState>, new_session: &str) -> Result<Session, String> {
+fn create_session(state: tauri::State<AppState>, name: &str) -> Result<Session, String> {
     state
         .db
         .lock()
         .unwrap()
-        .add_session(new_session)
+        .add_session(name)
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+fn delete_session(state: tauri::State<AppState>, id: i32) -> Result<(), String> {
+    state
+        .db
+        .lock()
+        .unwrap()
+        .delete_session(id)
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+fn update_session(state: tauri::State<AppState>, id: i32, name: &str) -> Result<(), String> {
+    state
+        .db
+        .lock()
+        .unwrap()
+        .update_session(id, name)
         .map_err(|err| err.to_string())
 }
 

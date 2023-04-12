@@ -20,8 +20,7 @@ class SessionRepository {
 
   // 增加一个从数据库中加载所有会话的功能
   async loadConversations(): Promise<Session[]> {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    const sessionList: [Session] = await invoke("get_all_sessions");
+    const sessionList: Session[] = await invoke("get_all_sessions");
     // 返回获取到的会话
     this.sessions = sessionList;
     return sessionList;
@@ -30,27 +29,25 @@ class SessionRepository {
   async createSession(name: string): Promise<Session> {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     const result: Session = await invoke("create_session", {
-      newSession: name,
+      name,
     });
     return result;
   }
 
   // 删除一个会话
-  // deleteConversation(id: string): void {
-  //   this.conversations = this.conversations.filter(
-  //     (conversation) => conversation.id !== id
-  //   );
-  // }
+  async deleteConversation(id: string): Promise<void> {
+    await invoke("delete_session", {
+      id,
+    });
+  }
 
   // 更新一个会话的会话名
-  // updateConversationName(id: string, name: string): void {
-  //   const conversation = this.conversations.find(
-  //     (conversation) => conversation.id === id
-  //   );
-  //   if (conversation) {
-  //     conversation.name = name;
-  //   }
-  // }
+  async updateSessionName(id: string, name: string): Promise<void> {
+    await invoke("update_session", {
+      id, //会自动转换为整形
+      name,
+    });
+  }
 }
 export type { Session };
 export { SessionRepository }; // 导出接口和类，以便在其他文件中使用

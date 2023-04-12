@@ -11,8 +11,8 @@ import {
 import type { App } from "vue";
 import type { ThemeDefinition as BaseThemeDefinition } from "vuetify";
 import { createVuetify } from "vuetify";
-import * as components from "vuetify/lib/components/index";
-import * as directives from "vuetify/lib/directives/index";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 
 import { useSettingStore } from "../store/setting";

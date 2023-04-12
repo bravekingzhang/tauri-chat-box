@@ -38,6 +38,22 @@ impl Database {
         })
     }
 
+    pub fn delete_session(&mut self, id: i32) -> Result<(), Error> {
+        let tx = self.conn.transaction()?;
+        tx.execute("DELETE FROM sessions WHERE id=?", [id])?;
+        // 删除关联会话的消息
+        tx.execute("DELETE FROM messages WHERE session_id=?", [id])?;
+        tx.commit()?;
+        Ok(())
+    }
+
+    pub fn update_session(&mut self, id: i32, name: &str) -> Result<(), Error> {
+        let tx = self.conn.transaction()?;
+        tx.execute("UPDATE sessions SET name=? WHERE id=?", params![name, id])?;
+        tx.commit()?;
+        Ok(())
+    }
+
     pub fn get_all_sessions(&mut self) -> Result<Vec<Session>, Error> {
         let mut stmt = self.conn.prepare("SELECT id, name FROM sessions")?;
         let session_iter = stmt.query_map([], |row| {
