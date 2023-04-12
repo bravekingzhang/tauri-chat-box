@@ -6,6 +6,18 @@ use session::Database;
 use session::Message;
 use session::Session;
 
+// use tauri::Manager;
+// tauri::Builder::default()
+//   .setup(|app| {
+//     #[cfg(debug_assertions)] // only include this code on debug builds
+//     {
+//       let window = app.get_window("main").unwrap();
+//       window.open_devtools();
+//       window.close_devtools();
+//     }
+//     Ok(())
+//   });
+
 fn main() {
     let db = Database::new("database.db").expect("Unable to create database connection");
     let app_state = AppState::new(Mutex::new(db));

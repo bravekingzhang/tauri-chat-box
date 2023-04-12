@@ -27,9 +27,9 @@ class MessageRepository {
     return MessageRepository.instance;
   }
   // 增加一个从数据库中加载所有会话的功能
-  async loadMessageBySessionId(session_id: string): Promise<Message[]> {
+  async loadMessageBySessionId(sessionId: string): Promise<Message[]> {
     const messageList: Message[] = await invoke("get_all_messages", {
-      session_id,
+      sessionId,
     });
     // 返回获取到的会话
     return messageList;
@@ -37,7 +37,10 @@ class MessageRepository {
 
   async addMessage(message: Message): Promise<Message> {
     const result: Message = await invoke("add_message", {
-      ...message,
+      sessionId:message.session_id,
+      role:message.role,
+      text:message.text,
+      attachmentPath:message.attachment_path,
     });
     return result;
   }

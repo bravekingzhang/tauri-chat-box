@@ -122,19 +122,21 @@ impl Database {
                  LEFT JOIN message_attachments ON messages.id=message_attachments.message_id
                  WHERE messages.session_id=?",
         )?;
-        let message_iter = stmt.query_map(&[&session_id], |row| {
+        // println!("sessionId is {}, stmt is {:#?}", session_id, stmt);
+        let message_iter = stmt.query_map([session_id], |row| {
             Ok(Message {
                 id: row.get(0)?,
                 session_id: session_id,
                 role: row.get(1)?,
-                text: row.get(3)?,
-                attachment_path: row.get(4)?,
+                text: row.get(2)?,
+                attachment_path: row.get(3)?,
             })
         })?;
         let mut messages = Vec::new();
         for message_result in message_iter {
             messages.push(message_result?);
         }
+        // println!("{:?}", messages);
         Ok(messages)
     }
 

@@ -14,6 +14,7 @@ export const useMessageStore = defineStore({
         await MessageRepository.getInstance().loadMessageBySessionId(
           session_id
         );
+      console.log('messages load success',session_id,messages);
       this.messageList = messages;
     },
     async addMessage(message: Message) {

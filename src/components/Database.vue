@@ -7,28 +7,37 @@ const name = ref("");
 const sessionList = ref<Session[]>();
 
 async function create_session() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    const session: Session = await SessionRepository.getInstance().createSession(name.value);
-    greetMsg.value = session.name;
+  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+  const session: Session = await SessionRepository.getInstance().createSession(
+    name.value
+  );
+  greetMsg.value = session.name;
 }
 
 async function get_all_sessions() {
-    sessionList.value = await SessionRepository.getInstance().loadConversations();
-    console.log(sessionList.value);
+  sessionList.value = await SessionRepository.getInstance().loadConversations();
 }
 </script>
 
 <template>
-    <div class="card">
-        <input id="greet-input" v-model="name" placeholder="Enter a session name..." />
-        <button type="button" @click="create_session()">create_session</button>
-        <button type="button" @click="get_all_sessions()">get_all_session</button>
-    </div>
+  <div class="card">
+    <input
+      id="greet-input"
+      v-model="name"
+      placeholder="Enter a session name..."
+    />
+    <button type="button" @click="create_session()">create_session</button>
+    <button type="button" @click="get_all_sessions()">get_all_session</button>
+  </div>
 
-    <p>{{ greetMsg }}</p>
-    <ul>
-        <ol v-for="(item, index) in sessionList">
-            {{ item.id }}--{{ item.name }}
-        </ol>
-    </ul>
+  <p>{{ greetMsg }}</p>
+  <ul>
+    <ol v-for="(item, index) in sessionList">
+      {{
+        item.id
+      }}--{{
+        item.name
+      }}
+    </ol>
+  </ul>
 </template>

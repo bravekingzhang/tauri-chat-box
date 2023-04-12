@@ -19,7 +19,7 @@ export const useSessionStore = defineStore({
       this.sessionList = sessions;
     },
     async createSession(name: string) {
-      await SessionRepository.getInstance().createSession("我是测试session");
+      await SessionRepository.getInstance().createSession(name);
       await this.fetchSessionList();
     },
     async editSession(session: Session) {
