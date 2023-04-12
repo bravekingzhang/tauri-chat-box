@@ -14,9 +14,10 @@ fn main() {
             greet,
             create_session,
             get_all_sessions,
-            add_message,
             delete_session,
             update_session,
+            add_message,
+            delete_message,
             get_all_messages
         ])
         .manage(app_state)
@@ -88,6 +89,16 @@ fn get_all_messages(
         .lock()
         .unwrap()
         .get_all_messages(session_id)
+        .map_err(|err| err.to_string())
+}
+
+#[tauri::command]
+fn delete_message(state: tauri::State<AppState>, message_id: i32) -> Result<(), String> {
+    state
+        .db
+        .lock()
+        .unwrap()
+        .delete_message(message_id)
         .map_err(|err| err.to_string())
 }
 

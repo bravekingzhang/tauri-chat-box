@@ -105,6 +105,15 @@ impl Database {
         })
     }
 
+    pub fn delete_message(&mut self, id: i32) -> Result<(), Error> {
+        let tx = self.conn.transaction()?;
+        tx.execute("DELETE FROM messages WHERE id=?", [id])?;
+        tx.execute("DELETE FROM message_texts WHERE message_id=?", [id])?;
+        tx.execute("DELETE FROM message_attachments WHERE message_id=?", [id])?;
+        tx.commit()?;
+        Ok(())
+    }
+
     pub fn get_all_messages(&self, session_id: i32) -> Result<Vec<Message>, Error> {
         let mut stmt = self.conn.prepare(
             "SELECT messages.id, messages.role,  message_texts.text, message_attachments.path

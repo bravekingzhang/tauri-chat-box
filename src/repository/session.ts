@@ -5,7 +5,6 @@ interface Session {
 }
 
 class SessionRepository {
-  private sessions: Session[];
   static instance: SessionRepository;
   public static getInstance(): SessionRepository {
     if (!SessionRepository.instance) {
@@ -13,16 +12,10 @@ class SessionRepository {
     }
     return SessionRepository.instance;
   }
-
-  constructor() {
-    this.sessions = [];
-  }
-
   // 增加一个从数据库中加载所有会话的功能
   async loadConversations(): Promise<Session[]> {
     const sessionList: Session[] = await invoke("get_all_sessions");
     // 返回获取到的会话
-    this.sessions = sessionList;
     return sessionList;
   }
   // 添加一个新会话
