@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import fukuanma from "@/src/assets/shoukuanma.png";
+import fukuanma from "@/assets/shoukuanma.png";
 </script>
 
 <style>
