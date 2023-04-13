@@ -30,6 +30,8 @@ tauri目前仅支持桌面端，而且因操作系统而已，UI层面的展现�
 - markdown syntax highlighting
 - pinia
 - vuetify
+
+
 ### 快速开始
 
 - 环境准备，[参考tauri官网](https://tauri.app/zh-cn/v1/guides/getting-started/prerequisites)
