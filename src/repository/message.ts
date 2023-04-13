@@ -1,5 +1,11 @@
 import { invoke } from "@tauri-apps/api/tauri";
 
+import ChatGptClient, {
+  DataCallback,
+  ResponseCallback,
+  ErrorCallback,
+} from "@/network";
+import { openai } from "@/network/types";
 /**
  *
  * pub struct Message {
@@ -11,11 +17,11 @@ import { invoke } from "@tauri-apps/api/tauri";
 }
  */
 interface Message {
-  id: string;
+  id?: string;
   session_id: string;
-  role: string;
-  text: string;
-  attachment_path: string;
+  role?: string;
+  text?: string;
+  attachment_path?: string;
 }
 
 class MessageRepository {
@@ -35,12 +41,30 @@ class MessageRepository {
     return messageList;
   }
 
+  askGpt(
+    query: string,
+    onData: DataCallback,
+    onResponse: ResponseCallback,
+    error: ErrorCallback
+  ) {
+    const message: openai.CreateChatCompletionRequest = {
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "user",
+          content: query,
+        },
+      ],
+    };
+    ChatGptClient.getInstance().post(message, onData, onResponse, error);
+  }
+
   async addMessage(message: Message): Promise<Message> {
     const result: Message = await invoke("add_message", {
-      sessionId:message.session_id,
-      role:message.role,
-      text:message.text,
-      attachmentPath:message.attachment_path,
+      sessionId: message.session_id,
+      role: message.role,
+      text: message.text,
+      attachmentPath: message.attachment_path,
     });
     return result;
   }

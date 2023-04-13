@@ -13,6 +13,9 @@ export interface SettingState {
   locale: string;
   appearance: APPEARANCE;
   customTheme: ThemeDefinition[];
+  stream: boolean;
+  proxyUrl: string;
+  apiKey: string;
 }
 export const useSettingStore = defineStore("setting", {
   state: () => {
@@ -22,6 +25,9 @@ export const useSettingStore = defineStore("setting", {
         locale: "zhCN",
         appearance: APPEARANCE.LIGHT,
         customTheme: [],
+        proxyUrl: "https://api.openai-proxy.com",
+        apiKey: "",
+        stream: true,
       },
       { mergeDefaults: true }
     );

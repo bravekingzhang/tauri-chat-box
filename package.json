@@ -30,6 +30,7 @@
     "@types/webfontloader": "^1.6.35",
     "@vitejs/plugin-vue": "^4.0.0",
     "chokidar": "^3.5.3",
+    "keyv": "^4.5.2",
     "material-design-icons-iconfont": "^6.7.0",
     "sass": "^1.61.0",
     "typescript": "^4.6.4",

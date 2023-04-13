@@ -18,9 +18,10 @@ export const useSessionStore = defineStore({
         await SessionRepository.getInstance().loadConversations();
       this.sessionList = sessions;
     },
-    async createSession(name: string) {
-      await SessionRepository.getInstance().createSession(name);
+    async createSession(name: string): Promise<Session> {
+      const session = await SessionRepository.getInstance().createSession(name);
       await this.fetchSessionList();
+      return session;
     },
     async editSession(session: Session) {
       await SessionRepository.getInstance().updateSessionName(

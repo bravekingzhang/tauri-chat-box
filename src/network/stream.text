@@ -1,0 +1,6 @@
+
+data: {\"id\":\"chatcmpl-74jIpG3baEx9XIuFnzj4cChAqnwZ6\",\"object\":\"chat.completion.chunk\",\"created\":1681361811,\"model\":\"gpt-3.5-turbo-0301\",\"choices\":[{\"delta\":{\"content\":\"）\"},\"index\":0,\"finish_reason\":null}]}
+
+data: {\"id\":\"chatcmpl-74jIpG3baEx9XIuFnzj4cChAqnwZ6\",\"object\":\"chat.completion.chunk\",\"created\":1681361811,\"model\":\"gpt-3.5-turbo-0301\",\"choices\":[{\"delta\":{},\"index\":0,\"finish_reason\":\"stop\"}]}
+
+data: [DONE]

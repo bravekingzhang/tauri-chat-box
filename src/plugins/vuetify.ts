@@ -44,7 +44,7 @@ export const useVuetify = (app: App) => {
       mobileBreakpoint: "xs",
     },
     theme: {
-      defaultTheme: "RedSandDunesLight",
+      defaultTheme: "GreenMountainTopLight",
       themes,
     },
   });
