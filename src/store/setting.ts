@@ -20,7 +20,7 @@ export const useSettingStore = defineStore("setting", {
       "setting",
       {
         locale: "zhCN",
-        appearance: APPEARANCE.SYSTEM,
+        appearance: APPEARANCE.LIGHT,
         customTheme: [],
       },
       { mergeDefaults: true }

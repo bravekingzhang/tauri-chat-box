@@ -3,7 +3,6 @@ import { ref } from "vue";
 import SessionView from "./components/Session.vue";
 import MessageView from "./components/Message.vue";
 import type { Session } from "@/repository/session";
-import { watch } from "vue";
 // 模拟一些items
 const user = {
   name: "your name",
