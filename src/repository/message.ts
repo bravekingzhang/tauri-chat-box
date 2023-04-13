@@ -41,21 +41,37 @@ class MessageRepository {
     return messageList;
   }
 
-  askGpt(
+  async askGpt(
     query: string,
     onData: DataCallback,
     onResponse: ResponseCallback,
-    error: ErrorCallback
+    error: ErrorCallback,
+    session_id: string = "",
+    needCarryContextMsg: boolean = false,
   ) {
     const message: openai.CreateChatCompletionRequest = {
       model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "user",
-          content: query,
-        },
-      ],
+      messages: [],
     };
+    if(needCarryContextMsg){
+      let messages =
+      await MessageRepository.getInstance().loadMessageBySessionId(
+        session_id
+      );
+      messages = messages.filter((item)=>item.role === "assistant");
+      if(messages && messages.length>1){
+        //保险起见就带一条，避免token数超了
+        const insertMessage  = messages[messages.length-1];
+        message.messages.push({
+          role: insertMessage.role as "user" | "assistant",
+          content: insertMessage.text!,
+        });
+      }
+    }
+    message.messages.push({
+      role: "user",
+      content: query,
+    });
     ChatGptClient.getInstance().post(message, onData, onResponse, error);
   }
 

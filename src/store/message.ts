@@ -13,8 +13,8 @@ export const useMessageStore = defineStore({
         await MessageRepository.getInstance().loadMessageBySessionId(
           session_id
         );
-      console.log("messages load success", session_id, messages);
       this.messageList = messages;
+      this.messageRely = null;
     },
     askGpt(message: Message) {
       MessageRepository.getInstance().askGpt(
@@ -27,12 +27,11 @@ export const useMessageStore = defineStore({
           };
         },
         (response) => {
-          this.messageRely = null;
           this.addMessage({
             session_id: message.session_id,
             role: "assistant",
             text: response,
-          });
+          },false);
         },
         (error) => {
           this.addMessage({
@@ -40,12 +39,17 @@ export const useMessageStore = defineStore({
             role: "assistant",
             text: error.message,
           });
-        }
+        },
+        message.session_id,
+        true
       );
+
     },
-    async addMessage(message: Message) {
+    async addMessage(message: Message,needRefresh = true) {
       await MessageRepository.getInstance().addMessage(message);
-      await this.fetchMessageList(message.session_id);
+      if(needRefresh){
+        await this.fetchMessageList(message.session_id);
+      }
     },
   },
 });
