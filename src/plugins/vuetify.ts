@@ -1,6 +1,8 @@
 import "vuetify/dist/vuetify.css";
 import "@mdi/font/css/materialdesignicons.css";
 
+import "@/styles/github-markdown.less";
+import "@/styles/highlight.less";
 import type { Scheme, Theme } from "@material/material-color-utilities";
 import {
   argbFromHex,
@@ -25,11 +27,6 @@ export interface ThemeDefinition extends BaseThemeDefinition {
 export const useVuetify = (app: App) => {
   const settingStore = useSettingStore();
   const { customTheme } = settingStore;
-  if (customTheme && customTheme.length) {
-    customTheme.map((theme) => {
-      themes[theme.name] = theme;
-    });
-  }
   const vuetify = createVuetify({
     components,
     directives,
@@ -44,7 +41,7 @@ export const useVuetify = (app: App) => {
       mobileBreakpoint: "xs",
     },
     theme: {
-      defaultTheme: "GreenMountainTopLight",
+      defaultTheme: customTheme ?? "GreenMountainTopLight",
       themes,
     },
   });

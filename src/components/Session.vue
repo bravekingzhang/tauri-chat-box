@@ -10,9 +10,9 @@ const sessionStore = useSessionStore();
 const { sessionList } = storeToRefs(sessionStore);
 
 const user = {
-  name: "hzzh",
+  name: "hz",
   avatar: userImage,
-  email: "hz@tencent.com",
+  email: "hz@qq.com",
 };
 
 const dialog = ref(false);
@@ -59,17 +59,9 @@ onMounted(async () => {
 <template>
   <v-navigation-drawer permanent :rail="rail" @click="rail = false">
     <v-list class="navigation-list-header">
-      <v-list-item
-        :prepend-avatar="user.avatar"
-        :title="user.name"
-        :subtitle="user.email"
-      >
+      <v-list-item :prepend-avatar="user.avatar" :title="user.name" :subtitle="user.email">
         <template v-slot:append>
-          <v-btn
-            variant="text"
-            icon="mdi-chevron-left"
-            @click.stop="rail = !rail"
-          ></v-btn>
+          <v-btn variant="text" icon="mdi-chevron-left" @click.stop="rail = !rail"></v-btn>
         </template>
       </v-list-item>
     </v-list>
@@ -77,32 +69,18 @@ onMounted(async () => {
 
     <v-list density="compact" nav style="flex-grow: 1; overflow-y: scroll">
       <v-list-subheader>Conversation List</v-list-subheader>
-      <v-list-item
-        v-for="item in sessionList"
-        prepend-icon="mdi-chat"
-        :value="item.id"
-        :title="item.name"
-        @click="selectSession(item)"
-        ><template v-slot:append>
+      <v-list-item v-for="item in sessionList" prepend-icon="mdi-chat" :value="item.id" :title="item.name"
+        @click="selectSession(item)"><template v-slot:append>
           <div class="text-center">
             <v-menu open-on-hover>
               <template v-slot:activator="{ props }">
-                <v-btn
-                  density="compact"
-                  v-bind="props"
-                  icon="mdi-information"
-                ></v-btn>
+                <v-btn density="compact" v-bind="props" icon="mdi-information"></v-btn>
               </template>
 
               <v-list>
-                <v-list-item
-                  v-for="(action, index) in sessionActions"
-                  :key="index"
-                >
-                  <v-list-item-title
-                    @click="handleSessionAction(action.title, item)"
-                    >{{ action.title }}</v-list-item-title
-                  >
+                <v-list-item v-for="(action, index) in sessionActions" :key="index">
+                  <v-list-item-title @click="handleSessionAction(action.title, item)">{{ action.title
+                  }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -121,16 +99,10 @@ onMounted(async () => {
               </v-card-actions>
             </v-card>
           </v-dialog>
-        </template></v-list-item
-      >
+        </template></v-list-item>
     </v-list>
     <v-divider></v-divider>
-    <v-list-item
-      style="min-height: 64px"
-      prepend-icon="mdi-cog"
-      title="settings"
-      @click="openSetting"
-    ></v-list-item>
+    <v-list-item style="min-height: 64px" prepend-icon="mdi-cog" title="settings" @click="openSetting"></v-list-item>
   </v-navigation-drawer>
 </template>
 
