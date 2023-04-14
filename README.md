@@ -1,5 +1,5 @@
 # tauri-gpt-box
-该项目是使用tauri实现的一个chatGPT聊天客户端，会话记录存储在sqlite中，使用rust端写接口的做的，性能相当不错。tauri本身特性，打的包比较小，只有6M。因为第一次写tauri，所有代码尽可能使用简单易理解的方式来组织，因此非常时候初学者入门 tauri
+该项目是使用tauri实现的一个chatGPT聊天客户端，会话记录存储在sqlite中，使用rust端写接口的做的，性能相当不错。tauri本身特性，打的包比较小，只有6M。因为第一次写tauri，所有代码尽可能使用简单易理解的方式来组织，因此**非常适合初学者入门 tauri**
 
 ### 推荐
 rust部分的源码需要有一定的rust基础才可以看，很简单，几乎是1天就可以上手看，直接去  [官网](https://www.rust-lang.org/zh-CN/)
