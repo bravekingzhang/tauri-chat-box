@@ -2,7 +2,8 @@
 
 该项目是使用 tauri 实现的一个 chatGPT 聊天客户端，会话记录存储在 sqlite 中，使用 rust 端写接口的做的，性能相当不错。tauri 本身特性，打的包比较小，只有 6M。因为第一次写 tauri，所有代码尽可能使用简单易理解的方式来组织，因此**非常适合初学者入门 tauri**
 
-[效果](https://github.com/bravekingzhang/tauri-chat-box/blob/main/art/20230414_103659.gif)
+<img src="https://github.com/bravekingzhang/tauri-chat-box/blob/main/art/20230414_103659.gif"  style="width: 90%;">
+<!-- 插入图片 -->
 
 ### 推荐
 
